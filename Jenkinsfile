@@ -1,19 +1,25 @@
 pipeline {
   agent any
+      tools {
+        maven 'maven3'
+    }
+    options {
+  buildDiscarder logRotator(daysToKeepStr: '5', numToKeepStr: '7')
+    }
   stages {
     stage('Build') {
       steps {
-        bat 'mvn clean'
+        sh 'mvn clean'
       }
     }
     stage('Test') {
       steps {
-        bat 'mvn test'
+        sh 'mvn test'
       }
     }
     stage('Deploy') {
       steps {
-        bat 'mvn package'
+        sh 'mvn package'
       }
     }
     stage('report') {
